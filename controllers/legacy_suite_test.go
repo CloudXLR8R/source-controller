@@ -30,6 +30,7 @@ import (
 	"helm.sh/helm/v3/pkg/getter"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/record"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/envtest"
@@ -112,15 +113,14 @@ var _ = BeforeSuite(func(done Done) {
 
 	err = (&GitRepositoryReconciler{
 		Client:  k8sManager.GetClient(),
-		Scheme:  scheme.Scheme,
 		Storage: ginkgoTestStorage,
 	}).SetupWithManager(k8sManager)
 	Expect(err).ToNot(HaveOccurred(), "failed to setup GtRepositoryReconciler")
 
 	err = (&HelmRepositoryReconciler{
-		Client:  k8sManager.GetClient(),
-		Scheme:  scheme.Scheme,
-		Storage: ginkgoTestStorage,
+		Client:        k8sManager.GetClient(),
+		EventRecorder: record.NewFakeRecorder(32),
+		Storage:       ginkgoTestStorage,
 		Getters: getter.Providers{getter.Provider{
 			Schemes: []string{"http", "https"},
 			New:     getter.NewHTTPGetter,
