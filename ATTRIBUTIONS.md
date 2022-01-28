@@ -12,7 +12,7 @@ https://github.com/libssh2/libssh2/
 
 No changes were made to its original source code. 
 
-Copyright notice (https://raw.githubusercontent.com/libssh2/libssh2/main/COPYING):
+Copyright notice (https://raw.githubusercontent.com/libssh2/libssh2/master/COPYING):
 
 /* Copyright (c) 2004-2007 Sara Golemon <sarag@libssh2.org>
  * Copyright (c) 2005,2006 Mikhail Gusarov <dottedmag@dottedmag.net>
